@@ -6,7 +6,7 @@ public:
         for( int i = 0 ; i <= command.size()-1 ; i++){
             if(command[i] == 'G'){
                 ans += 'G';
-            }
+            } 
             if(command[i] == '('){
                 if(command[i+1] == ')')
                     ans += 'o';
