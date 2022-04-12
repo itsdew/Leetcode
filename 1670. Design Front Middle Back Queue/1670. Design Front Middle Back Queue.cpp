@@ -1,3 +1,4 @@
+//Author: Devendra Uraon
 class FrontMiddleBackQueue {
     deque<int> l;
     deque<int> r;
