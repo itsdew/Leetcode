@@ -1,4 +1,4 @@
-//Devendra Uraon 
+//Devendra Uraon
 class Solution {
 public:
     vector<string> ans;
