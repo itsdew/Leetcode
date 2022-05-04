@@ -1,4 +1,4 @@
-//Devendra Uraon
+//Devendra Uraon 
 class Solution {
 public:
     bool compare(string a, string b){
