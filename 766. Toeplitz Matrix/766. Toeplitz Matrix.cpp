@@ -1,4 +1,4 @@
-//Devendra Uraon
+//Devendra Uraon 
 class Solution {
 public:
     bool isToeplitzMatrix(const vector<vector<int>>& m) {
