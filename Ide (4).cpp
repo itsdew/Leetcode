@@ -34,7 +34,7 @@ int main()
         		p++;
         		queue<int> q;
         		q.push(i);
-        		while(q.empty()==false){
+        		while(q.empty()==false&&count<n){
         			a=q.front();
         			q.pop();
         			if(v[a]==-1){
