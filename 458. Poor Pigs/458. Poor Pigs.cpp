@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
