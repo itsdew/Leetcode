@@ -9,7 +9,7 @@
 #define pi pair<int, int>
 #define vp vector<pi>
 #define ll long long
-#define MAX 2147000000
+#define MAX 21470000000
 #define MOD 998244353LL
 using namespace std;
 
