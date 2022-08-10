@@ -1,40 +1,42 @@
-//Author: Devendra Uraon
+// 2022-04-08
 #include <bits/stdc++.h>
+#define fastio                    \
+	ios_base::sync_with_stdio(0); \
+	cin.tie(0);
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
 #define pi pair<int, int>
 #define vp vector<pi>
 #define ll long long
-#define forloop for(ll i = 0; i < n; ++i)
-#define input cin >>
-#define print cout <<
 #define MAX 2147000000
 #define MOD 998244353LL
 using namespace std;
- 
+
 int main(){
-    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	ll T; cin >> T;
-    while(T--){
-        ll n; input n;
+    fastio;
+	int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
         vl vec(n);
-        ll mx = 0;
-        forloop{
-            input vec[i];
+        ll mx{0};
+        for(int i{0}; i < n; ++i){
+            cin >> vec[i];
             mx = max(mx, vec[i]);
         }
-        ll l = 0, r = MAX;
-        ll ans = MAX;
+        ll l{0}, r{MAX};
+        ll ans{MAX};
         while(l <= r){
-            ll m = (l + r) / 2;
+            ll m{(l + r) / 2};
             ll one = (m + 1) / 2;
             ll two = m / 2;
             vl v;
-            forloop{
+            for(int i{0}; i < n; ++i){
                 v.push_back(mx - vec[i]);
             }
-            forloop{
+            for(int i{0}; i < n; ++i){
                 ll k = v[i] / 2;
                 v[i] -= min(k, two) * 2;
                 two -= min(k, two);
@@ -49,14 +51,14 @@ int main(){
         }
         l = 0, r = MAX;
         while(l <= r){
-            ll m = (l + r) / 2;
+            ll m{(l + r) / 2};
             ll one = (m + 1) / 2;
             ll two = m / 2;
             vl v;
-            forloop{
+            for(int i{0}; i < n; ++i){
                 v.push_back(mx + 1 - vec[i]);
             }
-            forloop{
+            for(int i{0}; i < n; ++i){
                 ll k = v[i] / 2;
                 v[i] -= min(k, two) * 2;
                 two -= min(k, two);
@@ -69,6 +71,6 @@ int main(){
                 l = m + 1;
             }
         }
-        print ans << "\n";
+        cout << ans << "\n";
     }
 }
