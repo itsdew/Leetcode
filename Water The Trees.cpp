@@ -1,42 +1,40 @@
-// 2022-04-08
+//Author: Devendra Uraon
 #include <bits/stdc++.h>
-#define fastio                    \
-	ios_base::sync_with_stdio(0); \
-	cin.tie(0);
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
 #define pi pair<int, int>
 #define vp vector<pi>
 #define ll long long
-#define MAX 21470000000
+#define forloop for(ll i = 0; i < n; ++i)
+#define input cin >>
+#define print cout <<
+#define MAX 2147000000
 #define MOD 998244353LL
 using namespace std;
-
+ 
 int main(){
-    fastio;
-	int t;
-    cin >> t;
-    while(t--){
-        int n;
-        cin >> n;
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	ll T; cin >> T;
+    while(T--){
+        ll n; input n;
         vl vec(n);
-        ll mx{0};
-        for(int i{0}; i < n; ++i){
-            cin >> vec[i];
+        ll mx = 0;
+        forloop{
+            input vec[i];
             mx = max(mx, vec[i]);
         }
-        ll l{0}, r{MAX};
-        ll ans{MAX};
+        ll l = 0, r = LLONG_MAX;
+        ll ans = LLONG_MAX;
         while(l <= r){
-            ll m{(l + r) / 2};
+            ll m = (l + r) / 2;
             ll one = (m + 1) / 2;
             ll two = m / 2;
             vl v;
-            for(int i{0}; i < n; ++i){
+            forloop{
                 v.push_back(mx - vec[i]);
             }
-            for(int i{0}; i < n; ++i){
+            forloop{
                 ll k = v[i] / 2;
                 v[i] -= min(k, two) * 2;
                 two -= min(k, two);
@@ -49,16 +47,16 @@ int main(){
                 l = m + 1;
             }
         }
-        l = 0, r = MAX;
+        l = 0, r = LLONG_MAX;
         while(l <= r){
-            ll m{(l + r) / 2};
+            ll m = (l + r) / 2;
             ll one = (m + 1) / 2;
             ll two = m / 2;
             vl v;
-            for(int i{0}; i < n; ++i){
+            forloop{
                 v.push_back(mx + 1 - vec[i]);
             }
-            for(int i{0}; i < n; ++i){
+            forloop{
                 ll k = v[i] / 2;
                 v[i] -= min(k, two) * 2;
                 two -= min(k, two);
@@ -71,6 +69,6 @@ int main(){
                 l = m + 1;
             }
         }
-        cout << ans << "\n";
+        print ans << "\n";
     }
 }
