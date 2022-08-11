@@ -31,22 +31,22 @@ int main(){
     fastio;
 	int n;
     cin >> n;
-    vl vec(n);
-    map<ll, vl> m;
+    vi vec(n);
+    map<int, vi> m;
     for(int i{0}; i < n; ++i){
         cin >> vec[i];
         m[vec[i]].push_back(i);
     }
-    vector<pair<ll, ll> > v;
+    vp v;
     for(auto& i : m){
         if(i.second.size() == 1) continue;
         auto& s = i.second;
         sort(s.begin(), s.end());
         v.push_back({s.front(), s.back()});
     }
-    ll sum{0};
+    int sum{0};
     sort(v.begin(), v.end());
-    ll l{-1}, r{-1};
+    int l{-1}, r{-1};
     if(v.size()){
         l = v[0].first;
         r = v[0].second;
@@ -63,5 +63,8 @@ int main(){
         }
     }
     sum += r - l + 1;
-    cout << modpow(2, (ll)n - sum);
+    if(v.size() == 0){
+        cout << modpow(2, n - 1);
+    }
+    else cout << modpow(2, (ll)n - sum);
 }
