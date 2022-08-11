@@ -58,13 +58,9 @@ int main(){
             r = v[i].second;
         }
         else{
-            l = min(l, v[i].first);
             r = max(r, v[i].second);
         }
     }
     sum += r - l + 1;
-    if(v.size() == 0){
-        cout << modpow(2, n - 1);
-    }
-    else cout << modpow(2, (ll)n - sum);
+    cout << modpow(2, n - sum);
 }
