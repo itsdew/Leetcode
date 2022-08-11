@@ -31,22 +31,22 @@ int main(){
     fastio;
 	int n;
     cin >> n;
-    vi vec(n);
-    map<int, vi> m;
+    vl vec(n);
+    map<ll, vl> m;
     for(int i{0}; i < n; ++i){
         cin >> vec[i];
         m[vec[i]].push_back(i);
     }
-    vp v;
+    vector<pair<ll, ll> > v;
     for(auto& i : m){
         if(i.second.size() == 1) continue;
         auto& s = i.second;
         sort(s.begin(), s.end());
         v.push_back({s.front(), s.back()});
     }
-    int sum{0};
+    ll sum{0};
     sort(v.begin(), v.end());
-    int l{-1}, r{-1};
+    ll l{-1}, r{-1};
     if(v.size()){
         l = v[0].first;
         r = v[0].second;
