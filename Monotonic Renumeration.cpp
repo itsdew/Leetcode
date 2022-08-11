@@ -47,20 +47,22 @@ int main(){
     int sum{0};
     sort(v.begin(), v.end());
     int l{-1}, r{-1};
+    int cnt{1};
     if(v.size()){
         l = v[0].first;
         r = v[0].second;
     }
     for(int i{1}; i < (int)v.size(); ++i){
-        if(v[i].first > r){
+        if(v[i].first > r + 1){
             sum += r - l + 1;
             l = v[i].first;
             r = v[i].second;
+            cnt++;
         }
         else{
             r = max(r, v[i].second);
         }
     }
     sum += r - l + 1;
-    cout << modpow(2, n - sum);
+    cout << modpow(2, n - 1 - sum + cnt);
 }
