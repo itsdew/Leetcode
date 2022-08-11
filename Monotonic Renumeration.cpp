@@ -1,14 +1,14 @@
-//Author: Devendra Uraon
+// 2022-03-26
 #include <bits/stdc++.h>
+#define fastio                    \
+	ios_base::sync_with_stdio(0); \
+	cin.tie(0);
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
 #define pi pair<int, int>
 #define vp vector<pi>
 #define ll long long
-#define forloop for(int i = 0; i < n; ++i)
-#define input cin >>
-#define print cout <<
 #define MAX 2147000000
 #define MOD 998244353LL
 using namespace std;
@@ -26,13 +26,14 @@ ll modpow(ll a, ll b){
     }
     return ans;
 }
- 
+
 int main(){
-    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int n; input n;
+    fastio;
+	int n;
+    cin >> n;
     vi vec(n);
     map<int, vi> m;
-    forloop{
+    for(int i{0}; i < n; ++i){
         cin >> vec[i];
         m[vec[i]].push_back(i);
     }
@@ -43,9 +44,9 @@ int main(){
         sort(s.begin(), s.end());
         v.push_back({s.front(), s.back()});
     }
-    int sum = 0;
+    int sum{0};
     sort(v.begin(), v.end());
-    int l = -1, r = -1;
+    int l{-1}, r{-1};
     if(v.size()){
         l = v[0].first;
         r = v[0].second;
@@ -62,5 +63,5 @@ int main(){
         }
     }
     sum += r - l + 1;
-    print modpow(2, (ll)n - sum);
+    cout << modpow(2, (ll)n - sum);
 }
