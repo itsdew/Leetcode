@@ -1,5 +1,5 @@
 //Author: Devendra Uraon - TLE 
-//Helper: TaniiaRebello - TLE.Eliminator
+//Helper: TaniaRebello - TLE.Eliminator
 class Solution {
 public:
     map<string,vector<string>> parent;
