@@ -36,8 +36,5 @@ if( r<0 || r>=heights.size() || c>=heights[0].size() || c<0 )
          dfs(r-1,c,visit,heights[r][c],heights);
          dfs(r,c+1,visit,heights[r][c],heights);
          dfs(r,c-1,visit,heights[r][c],heights);
-           
-    
-        
     }
 };
