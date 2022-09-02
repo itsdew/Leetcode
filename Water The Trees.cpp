@@ -36,11 +36,11 @@ int main() {
             int h1, w1, h2, w2;
             cin >> h1 >> w1 >> h2 >> w2;
             ll ans{0};
-            auto it1 = lower_bound(vec.begin(), vec.end(), make_pair(h1 + 1, w1 + 1)) - vec.begin();
-            auto it2 = upper_bound(vec.begin(), vec.end(), make_pair(h2 - 1, w2 - 1)) - vec.begin();
-            while(it2 == n + 1 || (vec[it2].first == h2 || (vec[it2].second == w2))) it2--;
-            while(vec[it1].first == h1 || vec[it1].second == w1) it1++;
-            cout << preSum[it2] - preSum[it1 - 1] << "\n";            
+            auto it1 = lower_bound(vec.begin(), vec.end(), make_pair(h1, w1)) - vec.begin();
+            auto it2 = lower_bound(vec.begin(), vec.end(), make_pair(h2, w2)) - vec.begin();
+            while(it2 == n + 1 || (vec[it2].first >= h2) || (vec[it2].second >= w2) || (vec[it2].first == h1) || (vec[it2].second == w1)) it2--;
+            while(vec[it1].first == h1 || vec[it1].second == w1 || vec[it1].first == h2 || vec[it1].second == w2) it1++;            
+            cout << max(0LL, preSum[it2] - preSum[it1 - 1]) << "\n";            
         }
     }
 }
