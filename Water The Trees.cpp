@@ -20,27 +20,36 @@ int main() {
     int t;
     cin >> t;
     while(t--){
+        vector<vi> g(1001);
         int n, q;
         cin >> n >> q;
-        vp vec(n + 1);
-        for(int i{1}; i <= n; ++i){
-            cin >> vec[i].first >> vec[i].second;
+        for(int i{1}; i <= 1000; ++i){
+            g[i].push_back(0);
         }
-        sort(vec.begin(), vec.end());
-        vl preSum(n + 1);
-        for(int i{1}; i <= n; ++i){
-            preSum[i] = 1LL * vec[i].first * vec[i].second;
-            preSum[i] += preSum[i - 1];
+        for(int i{0}; i < n; ++i){
+            int a, b;
+            cin >> a >> b;
+            g[a].push_back(b);
+        }
+        vector<vi> preSum = g;
+        for(int i{1}; i <= 1000; ++i){
+            sort(g[i].begin(), g[i].end());
+        }
+        for(int i{1}; i <= 1000; ++i){
+            for(int j{1}; j < (int)g[i].size(); ++j){
+                preSum[i][j] += preSum[i][j - 1];
+            }
         }
         while(q--){
             int h1, w1, h2, w2;
             cin >> h1 >> w1 >> h2 >> w2;
             ll ans{0};
-            auto it1 = lower_bound(vec.begin(), vec.end(), make_pair(h1, w1)) - vec.begin();
-            auto it2 = lower_bound(vec.begin(), vec.end(), make_pair(h2, w2)) - vec.begin();
-            while(it2 == n + 1 || (vec[it2].first >= h2) || (vec[it2].second >= w2) || (vec[it2].first == h1) || (vec[it2].second == w1)) it2--;
-            while(vec[it1].first == h1 || vec[it1].second == w1 || vec[it1].first == h2 || vec[it1].second == w2) it1++;            
-            cout << max(0LL, preSum[it2] - preSum[it1 - 1]) << "\n";            
+            for(int i{h1 + 1}; i < h2; ++i){
+                int l = upper_bound(g[i].begin(), g[i].end(), w1) - g[i].begin();
+                int r = lower_bound(g[i].begin(), g[i].end(), w2) - g[i].begin();
+                ans += 1LL * i * (preSum[i][r - 1] - preSum[i][l - 1]);
+            }
+            cout << ans << "\n";
         }
     }
 }
