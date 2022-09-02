@@ -38,7 +38,8 @@ int main() {
             ll ans{0};
             auto it1 = lower_bound(vec.begin(), vec.end(), make_pair(h1 + 1, w1 + 1)) - vec.begin();
             auto it2 = upper_bound(vec.begin(), vec.end(), make_pair(h2 - 1, w2 - 1)) - vec.begin();
-            cout << preSum[it2 - 1] - preSum[it1 - 1] << "\n";
+            while(it2 == n + 1 || (vec[it2].first == h2 || (vec[it2].second == w2))) it2--;
+            cout << preSum[it2] - preSum[it1 - 1] << "\n";            
         }
     }
 }
