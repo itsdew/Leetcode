@@ -1,4 +1,5 @@
-// 2022-08-30
+//Question: https://codeforces.com/contest/1661/problem/C
+// 2022-03-14
 #include <bits/stdc++.h>
 #define fastio                    \
 	ios_base::sync_with_stdio(0); \
@@ -6,51 +7,54 @@
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
-#define vs vector<string>
 #define pi pair<int, int>
-#define pl pair<ll, ll>
 #define vp vector<pi>
 #define ll long long
 #define MAX 2147000000
-#define MOD 1000000007
+#define MOD 998244353LL
 using namespace std;
 
-int main() {
-	fastio;
-    int t;
-    cin >> t;
-    while(t--){
-        vector<vi> g(1001);
-        int n, q;
-        cin >> n >> q;
-        for(int i{1}; i <= 1000; ++i){
-            g[i].push_back(0);
+int main(){
+    fastio;
+    int n;
+    cin >> n;
+    vi C(n);
+    for(int i{0}; i < n; ++i){
+        cin >> C[i];
+    }
+    vector<string> vec(n);
+    for(int i{0}; i < n; ++i){
+        cin >> vec[i];
+    }
+    vector<vl> dp(n, vl(2, MAX));
+    dp[0][0] = 0;
+    dp[0][1] = C[0];
+    for(int i{1}; i < n; ++i){
+        if(dp[i - 1][0] == MAX && dp[i - 1][1] == MAX){
+            cout << -1;
+            return 0;
         }
-        for(int i{0}; i < n; ++i){
-            int a, b;
-            cin >> a >> b;
-            g[a].push_back(b);
+        string p = vec[i - 1];
+        string pr = p;
+        reverse(pr.begin(), pr.end());
+        string r = vec[i];
+        reverse(r.begin(), r.end());
+        if(vec[i] >= p){
+            dp[i][0] = min(dp[i][0], dp[i - 1][0]);
         }
-        vector<vi> preSum = g;
-        for(int i{1}; i <= 1000; ++i){
-            sort(g[i].begin(), g[i].end());
+        if(vec[i] >= pr){
+            dp[i][0] = min(dp[i][0], dp[i - 1][1]);
         }
-        for(int i{1}; i <= 1000; ++i){
-            for(int j{1}; j < (int)g[i].size(); ++j){
-                preSum[i][j] += preSum[i][j - 1];
-            }
+        if(r >= p){
+            dp[i][1] = min(dp[i][1], dp[i - 1][0] + C[i]);
         }
-        while(q--){
-            int h1, w1, h2, w2;
-            cin >> h1 >> w1 >> h2 >> w2;
-            ll ans{0};
-            for(int i{h1 + 1}; i < h2; ++i){
-                int l = upper_bound(g[i].begin(), g[i].end(), w1) - g[i].begin();
-                int r = lower_bound(g[i].begin(), g[i].end(), w2) - g[i].begin();
-                ans += 1LL * i * (preSum[i][r - 1] - preSum[i][l - 1]);
-            }
-            cout << ans << "\n";
+        if(r >= pr){
+            dp[i][1] = min(dp[i][1], dp[i - 1][1] + C[i]);
         }
     }
+    ll ans = min(dp[n - 1][0], dp[n - 1][1]);
+    if(ans == MAX) cout << -1;
+    else{
+        cout << ans;
+    }
 }
-
