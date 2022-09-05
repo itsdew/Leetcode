@@ -35,21 +35,16 @@ int main(){
             v.push_back(vec[n - 1 - i]);
         }
         bool flag = true;
-        for(int i{0}; i < n - 1; ++i){
-            if(v[i] == v[i + 1]){
-                flag = false;
-            }
+        for(int i{0}; i < n; ++i){
+            if(v[i] > v[(i + 1) % n] && v[i] > v[(i + n - 1) % n]) continue;
+            if(v[i] < v[(i + 1) % n] && v[i] < v[(i + n - 1) % n]) continue;
+            flag = false;
         }
-        if(v.front() == v.back()) flag = false;
         if(flag){
             cout << "YES\n";
-            for(auto& i : v){
-                cout << i << " ";
-            }
+            for(auto& i : v) cout << i << " ";
             cout << "\n";
         }
-        else{
-            cout << "NO\n";
-        }
+        else cout << "NO\n";
     }
 }
