@@ -1,5 +1,4 @@
-//Question: https://codeforces.com/contest/1661/problem/C
-// 2022-03-14
+// 2022-05-24
 #include <bits/stdc++.h>
 #define fastio                    \
 	ios_base::sync_with_stdio(0); \
@@ -11,50 +10,46 @@
 #define vp vector<pi>
 #define ll long long
 #define MAX 2147000000
-#define MOD 998244353LL
+#define MOD 1000000007
 using namespace std;
 
 int main(){
     fastio;
-    int n;
-    cin >> n;
-    vi C(n);
-    for(int i{0}; i < n; ++i){
-        cin >> C[i];
-    }
-    vector<string> vec(n);
-    for(int i{0}; i < n; ++i){
-        cin >> vec[i];
-    }
-    vector<vl> dp(n, vl(2, MAX));
-    dp[0][0] = 0;
-    dp[0][1] = C[0];
-    for(int i{1}; i < n; ++i){
-        if(dp[i - 1][0] == MAX && dp[i - 1][1] == MAX){
-            cout << -1;
-            return 0;
+	int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        vi vec(n);
+        for(int i{0}; i < n; ++i){
+            cin >> vec[i];
         }
-        string p = vec[i - 1];
-        string pr = p;
-        reverse(pr.begin(), pr.end());
-        string r = vec[i];
-        reverse(r.begin(), r.end());
-        if(vec[i] >= p){
-            dp[i][0] = min(dp[i][0], dp[i - 1][0]);
+        if(n & 1){
+            cout << "NO\n";
+            continue;
         }
-        if(vec[i] >= pr){
-            dp[i][0] = min(dp[i][0], dp[i - 1][1]);
+        vi v;
+        cout << "YES\n";
+        sort(vec.begin(), vec.end());
+        for(int i{0}; i < n / 2; ++i){
+            v.push_back(vec[i]);
+            v.push_back(vec[n - 1 - i]);
         }
-        if(r >= p){
-            dp[i][1] = min(dp[i][1], dp[i - 1][0] + C[i]);
+        bool flag = true;
+        for(int i{0}; i < n - 1; ++i){
+            if(v[i] == v[i + 1]){
+                flag = false;
+            }
         }
-        if(r >= pr){
-            dp[i][1] = min(dp[i][1], dp[i - 1][1] + C[i]);
+        if(v.front() == v.back()) flag = false;
+        if(flag){
+        for(auto& i : v){
+            cout << i << " ";
         }
-    }
-    ll ans = min(dp[n - 1][0], dp[n - 1][1]);
-    if(ans == MAX) cout << -1;
-    else{
-        cout << ans;
+        cout << "\n";
+        }
+        else{
+            cout << "NO\n";
+        }
     }
 }
