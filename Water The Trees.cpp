@@ -29,7 +29,6 @@ int main(){
             continue;
         }
         vi v;
-        cout << "YES\n";
         sort(vec.begin(), vec.end());
         for(int i{0}; i < n / 2; ++i){
             v.push_back(vec[i]);
@@ -43,10 +42,11 @@ int main(){
         }
         if(v.front() == v.back()) flag = false;
         if(flag){
-        for(auto& i : v){
-            cout << i << " ";
-        }
-        cout << "\n";
+            cout << "YES\n";
+            for(auto& i : v){
+                cout << i << " ";
+            }
+            cout << "\n";
         }
         else{
             cout << "NO\n";
