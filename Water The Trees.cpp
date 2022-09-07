@@ -15,40 +15,6 @@ using namespace std;
 
 vi graph[5000];
 vi graph2[5000];
-int n;
-int ch[4]{};
-int ans{0};
-
-void dfs(int L, vi& vec, int k){
-    if(L == 4){        
-        ans++;
-    }
-    else{
-        if(L == 0 || L == 1){
-            for(int i{k + 1}; i < n; ++i){
-                ch[L] = i;
-                dfs(L + 1, vec, i);
-            }
-        }
-        else if(L == 2){
-            for(auto& i : graph[ch[0]]){
-                if(i > ch[1]){
-                    ch[2] = i;
-                    dfs(L + 1, vec, i);
-                }
-            }
-        }
-        else if(L == 3){
-            for(auto& i : graph2[ch[1]]){
-                if(i > ch[2]){
-                    ch[3] = i;
-                    dfs(L + 1, vec, i);
-                }
-            }
-        }
-    }
-}
-
 
 
 int main(){
@@ -56,7 +22,7 @@ int main(){
 	int t;
     cin >> t;
     while(t--){
-        ans = 0;
+        int n;
         cin >> n;
         vi vec(n);
         for(int i{0}; i < n; ++i){
@@ -74,7 +40,14 @@ int main(){
                 }
             }
         }
-        dfs(0, vec, -1);
+        int ans{0};
+        for(int a{0}; a < n; ++a){
+            for(auto& c : graph[a]){
+                for(int j{a + 1}; j < c; ++j){
+                    ans += graph2[j].end() - upper_bound(graph2[j].begin(), graph2[j].end(), c);
+                }
+            }   
+        }
         cout << ans << "\n";
     }
 }
