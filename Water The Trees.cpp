@@ -46,18 +46,16 @@ int main(){
                 dp[i][j] = graph2[i].end() - upper_bound(graph2[i].begin(), graph2[i].end(), j);
             }
         }
-        for(int j{0}; j < n; ++j){
-            for(int i{1}; i < n; ++i){
-                dp[i][j] += dp[i - 1][j];
-            }
-        }
+        // for(int j{0}; j < n; ++j){
+        //     for(int i{1}; i < n; ++i){
+        //         dp[i][j] += dp[i - 1][j];
+        //     }
+        // }
         for(int a{0}; a < n; ++a){
             for(auto& c : graph[a]){
-                // for(int j{a + 1}; j < c; ++j){
-                //     ans += dp[j][c]
-                // }
-                if(c == 0) continue;
-                ans += dp[c - 1][c] - dp[a][c];
+                for(int j{a + 1}; j < c; ++j){
+                    ans += dp[j][c];
+                }                
             }   
         }
         cout << ans << "\n";
