@@ -38,6 +38,7 @@ int main(){
         vi ch(n + 1);
         int l{1}, r{n};
         vi select(n + 1);
+        bool flag = true;
         for(int i{1}; i <= n; ++i){
             if(ch[i] == 0){
                 queue<int> Q;
@@ -55,16 +56,15 @@ int main(){
                         }
                     }
                 }
-                bool flag = true;
                 if(vec.size() == 1) continue;
-                for(int i{0}; i < (int)vec.size(); ++i){
+                for(int j{0}; j < (int)vec.size(); ++j){
                     if(flag){
-                        select[vec[i]] = l;
+                        select[vec[j]] = l;
                         l++;
                         flag = false;
                     }
                     else{
-                        select[vec[i]] = r;
+                        select[vec[j]] = r;
                         r--;
                         flag = true;
                     }
@@ -72,9 +72,7 @@ int main(){
                 for(int j{0}; j < (int)vec.size() - 1; ++j){
                     ans += abs(select[vec[j + 1]] - select[vec[j]]);
                 }
-                if(vec.size()){
-                    ans += abs(select[vec[0]] - select[vec.back()]);                
-                }
+                ans += abs(select[vec[0]] - select[vec.back()]);                
             }
         }
         cout << ans << "\n";
