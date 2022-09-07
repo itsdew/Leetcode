@@ -30,7 +30,7 @@ int main(){
         for(int i{0}; i < n; ++i){
             cin >> B[i];
         }
-        int ans{0};
+        ll ans{0};
         for(int i{0}; i < n; ++i){
             graph[A[i]].push_back(B[i]);
             graph[B[i]].push_back(A[i]);
