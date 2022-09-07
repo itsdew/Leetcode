@@ -15,7 +15,7 @@ using namespace std;
 
 vi graph[5000];
 vi graph2[5000];
-int dp[5000][5000]{};
+int dp[5001][5001]{};
 
 int main(){
     fastio;
@@ -40,22 +40,23 @@ int main(){
                 }
             }
         }
-        int ans{0};
+        ll ans{0};
         for(int i{0}; i < n; ++i){
             for(int j{0}; j < n; ++j){
                 dp[i][j] = graph2[i].end() - upper_bound(graph2[i].begin(), graph2[i].end(), j);
             }
         }
-        // for(int j{0}; j < n; ++j){
-        //     for(int i{1}; i < n; ++i){
-        //         dp[i][j] += dp[i - 1][j];
-        //     }
-        // }
+        for(int j{0}; j < n; ++j){
+            for(int i{1}; i < n; ++i){
+                dp[i][j] += dp[i - 1][j];
+            }
+        }
         for(int a{0}; a < n; ++a){
-            for(auto& c : graph[a]){
-                for(int j{a + 1}; j < c; ++j){
-                    ans += dp[j][c];
-                }                
+            for(auto c : graph[a]){
+                // for(int j{a + 1}; j < c; ++j){
+                //     ans += dp[j][c];
+                // }          
+                ans += dp[c - 1][c] - dp[a][c];       
             }   
         }
         cout << ans << "\n";
