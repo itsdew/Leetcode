@@ -1,8 +1,6 @@
-// 2022-05-04
+//Question: https://codeforces.com/contest/1661/problem/C
+//Author: Devendra Uraon
 #include <bits/stdc++.h>
-#define fastio                    \
-	ios_base::sync_with_stdio(0); \
-	cin.tie(0);
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
@@ -10,55 +8,49 @@
 #define vp vector<pi>
 #define ll long long
 #define MAX 2147000000
-#define MOD 1000000007
+#define MOD 998244353LL
 using namespace std;
 
-vi graph[5000];
-vi graph2[5000];
-int dp[5001][5001]{};
-
 int main(){
-    fastio;
-	int t;
-    cin >> t;
-    while(t--){
-        int n;
-        cin >> n;
-        vi vec(n);
-        for(int i{0}; i < n; ++i){
-            cin >> vec[i];
-            graph[i].clear();
-            graph2[i].clear();
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    int n; cin >> n;
+    vi C(n);
+    for(int i = 0; i < n; ++i){
+        cin >> C[i];
+    }
+    vector<string> vec(n);
+    for(int i = 0; i < n; ++i){
+        cin >> vec[i];
+    }
+    vector<vl> dp(n, vl(2, MAX));
+    dp[0][0] = 0;
+    dp[0][1] = C[0];
+    for(int i{1}; i < n; ++i){
+        if(dp[i - 1][0] == MAX && dp[i - 1][1] == MAX){
+            cout << -1;
+            return 0;
         }
-        for(int i{0}; i < n; ++i){
-            for(int j{i + 1}; j < n; ++j){
-                if(vec[i] < vec[j]){
-                    graph[i].push_back(j);
-                }
-                if(vec[i] > vec[j]){
-                    graph2[i].push_back(j);
-                }
-            }
+        string p = vec[i - 1];
+        string pr = p;
+        reverse(pr.begin(), pr.end());
+        string r = vec[i];
+        reverse(r.begin(), r.end());
+        if(vec[i] >= p){
+            dp[i][0] = min(dp[i][0], dp[i - 1][0]);
         }
-        ll ans{0};
-        for(int i{0}; i < n; ++i){
-            for(int j{0}; j < n; ++j){
-                dp[i][j] = graph2[i].end() - upper_bound(graph2[i].begin(), graph2[i].end(), j);
-            }
+        if(vec[i] >= pr){
+            dp[i][0] = min(dp[i][0], dp[i - 1][1]);
         }
-        for(int j{0}; j < n; ++j){
-            for(int i{1}; i < n; ++i){
-                dp[i][j] += dp[i - 1][j];
-            }
+        if(r >= p){
+            dp[i][1] = min(dp[i][1], dp[i - 1][0] + C[i]);
         }
-        for(int a{0}; a < n; ++a){
-            for(auto c : graph[a]){
-                // for(int j{a + 1}; j < c; ++j){
-                //     ans += dp[j][c];
-                // }          
-                ans += dp[c - 1][c] - dp[a][c];       
-            }   
+        if(r >= pr){
+            dp[i][1] = min(dp[i][1], dp[i - 1][1] + C[i]);
         }
-        cout << ans << "\n";
+    }
+    ll ans = min(dp[n - 1][0], dp[n - 1][1]);
+    if(ans == MAX) cout << -1;
+    else{
+        cout << ans;
     }
 }
