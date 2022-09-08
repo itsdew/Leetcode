@@ -57,7 +57,9 @@ int main(){
                     }
                 }
                 if(vec.size() == 1) continue;
-                for(int j{0}; j < (int)vec.size(); ++j){
+                int s = (int)vec.size();
+                if(s & 1) s--;
+                for(int j{0}; j < s; ++j){
                     if(flag){
                         select[vec[j]] = l;
                         l++;
@@ -69,10 +71,18 @@ int main(){
                         flag = true;
                     }
                 }
-                for(int j{0}; j < (int)vec.size() - 1; ++j){
-                    ans += abs(select[vec[j + 1]] - select[vec[j]]);
+                if(vec.size() & 1){
+                    for(int i{1}; i < (int)vec.size() - 1; ++i){
+                        ans += abs(select[vec[i]] - select[vec[i - 1]]);
+                    }
+                    ans += abs(select[(int)vec.size() - 2] - select[vec[0]]);
                 }
-                ans += abs(select[vec[0]] - select[vec.back()]);                
+                else{
+                    for(int i{1}; i < (int)vec.size(); ++i){
+                        ans += abs(select[vec[i]] - select[vec[i - 1]]);
+                    }
+                    ans += abs(select[vec.back()] - select[vec[0]]);
+                }
             }
         }
         cout << ans << "\n";
