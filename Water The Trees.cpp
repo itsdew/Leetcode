@@ -76,16 +76,16 @@ void solve() {
 		lli a, b, x, y;
 		cin>>a>>b;
 		lli gcd = exgcd(a, b, x, y);
-//		cout<<x<<'\n';
 		if(n%gcd) {
 			cout<<"-1\n";
 			continue;
 		}
 		x = x*n/gcd;
-//		a*x  mx
+//		cout<<x<<' ';
 		x+=ceil((1.0*mx/a-x)/(b/gcd))*(b/gcd);
-		if(x<0)	x+=b/gcd;
+		if(a*x<mx)	x+=b/gcd;
 		y = x-b/gcd;
+//		cout<<x<<' '<<y<<' ';
 		cout<<max((0<=a*x&&a*x<=n) ? sum[a*x] : -1, (0<=a*y&&a*y<=n) ? sum[a*y] : -1)<<'\n';
 	}
 }
