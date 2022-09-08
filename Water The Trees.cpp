@@ -1,111 +1,100 @@
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-
-#define fi first
-#define se second
-#define p_b push_back
-#define pll pair<ll,ll>
-#define pii pair<int,int>
-#define m_p make_pair
-#define all(x) x.begin(),x.end()
-#define sqr(x) (x)*(x)
-#define pw(x) (1ll << (x))
-#define sz(x) (int)x.size()
-#define fout(x) {cout << x << "\n"; return; }
+#pragma G++ optimize("Ofast")
+#pragma G++ optimize("unroll-loops")
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<cstring>
+#include<functional>
+#include<queue>
+#include<unordered_map>
+#include<map>
+#include<set>
+#include<stack>
+#include<cmath>
+#include<bitset>
+#include<iomanip>
+#include<numeric>
 
 using namespace std;
-using namespace __gnu_pbds;
-typedef long long ll;
-typedef long double ld;
-const int MAXN = 1e6 + 1e5;;
-const int M = pw(16);
-const long long mod = 998244353;
-const int N = 3e5;
-const int inf = 1e9;
-template <typename T> void vout(T s){cout << s << endl;exit(0);}
 
-mt19937_64 rnd(chrono::system_clock::now().time_since_epoch().count());
+using lli = long long;
+using pii = pair<lli, lli>;
+const int INF = 1e9;
+const lli inf = 1e18;
+const int maxn = 1e5+5;
+int n, m, ans, mx;
+int sum[maxn];
 
-template <typename T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+struct Node {
+	int a, b, c;
+	bool operator < (const Node x) const {
+		return c<x.c;
+	}
+} a[maxn];
 
-const ll buben = 500;
+lli exgcd(lli a, lli b, lli &x, lli &y) {
+	if(!b) {
+		x = 1;
+		y = 0;
+		return a;
+	}
+	
+	lli d = exgcd(b, a%b, y, x);
+	y = y - a/b*x;
+	
+	return d;
+}
+//gcd = exgcd(a, b, x, y)
+//x = x*c/gcd;
+//y = y*c/gcd;
 
-vector <int> dv[N + 10];
 
-void solve() {       
-    ll n;
-    cin >> n;
-    ll s = 0;
-    vector <ll> c;
-    for (int i = 1; i <= N; i++) {
-        for (int j = i; j <= N; j += i) dv[j].p_b(i);
-    }
-
-    for (int i = 0; i < n; i++) {
-        ll a, b;
-        cin >> a >> b;
-        c.p_b(a - b);
-        s += b;
-    }
-    sort(all(c));
-    reverse(all(c));
-    vector <ll> f(n + 1);
-    f[0] = s;
-    for (int i = 1; i <= n; i++) f[i] = f[i - 1] + c[i - 1];
-    ll q;
-    cin >> q;
-    map <pii, ll> mp;    
-
-    for (int x = 1; x <= buben; x++) {
-        for (int c = 0; c * x <= n; c++) {            
-            for (auto y : dv[n - c * x]) {                              
-                mp[{x, y}] = max(mp[{x, y}], f[c * x]);  
-            }            
-        }
-    }
-
-    while (q--) {
-        ll ans = -1;
-        ll x, y;
-        cin >> x >> y;
-        if (x >= buben) {
-            for (int c = 0; c * x <= n; c++) if ((n - c * x) % y == 0) {
-                ans = max(ans, f[c * x]);
-            }
-            cout << ans << "\n";
-        }else{
-            ll ans = -1;
-            if (n % x == 0) ans = f[n];
-            if (mp.find({x, y}) == mp.end()) {
-                cout << ans << "\n";;
-            }else {
-                cout << max(ans, mp[{x, y}]) << "\n";
-            }
-        }        
-    }
-    cout << "\n";
+void solve() {
+	cin>>n;
+	ans = 0;
+	
+	for(int i=1; i<=n; ++i) {
+		cin>>a[i].a>>a[i].b;
+		a[i].c = a[i].b-a[i].a;
+		sum[n]+=a[i].a;
+	}
+	sort(a+1, a+1+n);
+	
+	mx = n;
+	for(int i=n-1; i>=0; --i) {
+		sum[i] = sum[i+1]+a[i+1].c;
+		if(a[i+1].c>0)	mx = i;
+	}
+	
+//	for(int i=0; i<=n; ++i) {
+//		cout<<sum[i]<<' ';
+//	}cout<<'\n';
+	
+	cin>>m;
+	
+	for(int i=1; i<=m; ++i) {
+		lli a, b, x, y;
+		cin>>a>>b;
+		lli gcd = exgcd(a, b, x, y);
+//		cout<<x<<'\n';
+		if(n%gcd) {
+			cout<<"-1\n";
+			continue;
+		}
+		x = x*n/gcd;
+//		a*x  mx
+		x+=ceil((1.0*mx/a-x)/(b/gcd))*(b/gcd);
+		if(x<0)	x+=b/gcd;
+		y = x-b/gcd;
+		cout<<max((0<=a*x&&a*x<=n) ? sum[a*x] : -1, (0<=a*y&&a*y<=n) ? sum[a*y] : -1)<<'\n';
+	}
 }
 
-
-int main(){
-
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
-    ll t;  
-
-    #ifdef Local
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-        cin >> t;
-    #endif  
-    // cin >> t;   
-
-    while (t--) {
-        solve();
-    }
-
-
-    return 0;
-}  
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	int t=1;
+//	cin>>t;
+	while(t--)solve();
+	return 0;
+}
