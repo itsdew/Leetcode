@@ -1,8 +1,6 @@
-// 2022-03-14
+//Question: https://codeforces.com/contest/1661/problem/C
+//Author: Devendra Uraon
 #include <bits/stdc++.h>
-#define fastio                    \
-	ios_base::sync_with_stdio(0); \
-	cin.tie(0);
 #define vi vector<int>
 #define vl vector<long long>
 #define vc vector<char>
@@ -14,53 +12,45 @@
 using namespace std;
 
 int main(){
-    fastio;
-    int t;
-    cin >> t;
-    while(t--){
-        int n;
-        cin >> n;
-        vl A(n), B(n);
-        for(int i{0}; i < n; ++i){
-            cin >> A[i];
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+    int n; cin >> n;
+    vi C(n);
+    for(int i = 0; i < n; ++i){
+        cin >> C[i];
+    }
+    vector<string> vec(n);
+    for(int i = 0; i < n; ++i){
+        cin >> vec[i];
+    }
+    vector<vl> dp(n, vl(2, MAX));
+    dp[0][0] = 0;
+    dp[0][1] = C[0];
+    for(int i{1}; i < n; ++i){
+        if(dp[i - 1][0] == MAX && dp[i - 1][1] == MAX){
+            cout << -1;
+            return 0;
         }
-        ll sum{0};
-        for(int i{0}; i < n; ++i){
-            cin >> B[i];
-            sum += B[i];
+        string p = vec[i - 1];
+        string pr = p;
+        reverse(pr.begin(), pr.end());
+        string r = vec[i];
+        reverse(r.begin(), r.end());
+        if(vec[i] >= p){
+            dp[i][0] = min(dp[i][0], dp[i - 1][0]);
         }
-        map<int, vl> m;
-        for(int i{0}; i < n; ++i){
-            m[A[i]].push_back(B[i]);
+        if(vec[i] >= pr){
+            dp[i][0] = min(dp[i][0], dp[i - 1][1]);
         }
-        int mx{0};
-        for(auto& i : m){
-            auto& v = i.second;
-            sort(v.begin(), v.end());
-            mx = max(mx, (int)v.size());
-            for(int j{1}; j < (int)v.size(); ++j){
-                v[j] += v[j - 1];
-            }
+        if(r >= p){
+            dp[i][1] = min(dp[i][1], dp[i - 1][0] + C[i]);
         }
-        vl ans(n);
-        for(int i{1}; i <= mx; ++i){
-            ll k = sum;
-            for(auto& j : m){
-                int s = (int)j.second.size();
-                if(i > s){
-                    k -= j.second.back();
-                    continue;
-                }
-                int d = s % i;
-                if(d == 0) continue;
-                k -= j.second[d - 1];
-            }
-            ans[i - 1] = k;
+        if(r >= pr){
+            dp[i][1] = min(dp[i][1], dp[i - 1][1] + C[i]);
         }
-        for(int i{0}; i < n; ++i){
-            if(i >= mx) cout << 0 << " ";
-            else cout << ans[i] << " ";
-        }
-        cout << "\n";
+    }
+    ll ans = min(dp[n - 1][0], dp[n - 1][1]);
+    if(ans == MAX) cout << -1;
+    else{
+        cout << ans;
     }
 }
