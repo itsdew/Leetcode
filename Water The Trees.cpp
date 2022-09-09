@@ -17,6 +17,11 @@ int gcd(int a, int b){
     if(b == 0) return a;
     return gcd(b, a % b);
 }
+
+int lcm(int a, int b){
+    return a / gcd(a, b) * b;
+}
+
 int main(){
     fastio;
     int n;
@@ -31,21 +36,26 @@ int main(){
         post[i] = gcd(vec[i], post[i + 1]);
     }
     vi pre(n);
-    post[0] = vec[0];
+    pre[0] = vec[0];
     for(int i{1}; i < n; ++i){
         pre[i] = gcd(vec[i], pre[i - 1]);
     }
-    int ans{0};
+    int ans{1};
+    vi v;
     for(int i{0}; i < n; ++i){
         if(i == 0){
-            ans = max(ans, post[1]);
+            v.push_back(post[1]);
         }
         else if(i == n -1){
-            ans = max(ans, pre[n - 2]);
+            v.push_back(pre[n - 2]);
         }
         else{
-            ans = max(ans, gcd(pre[i - 1], post[i + 1]));
+            v.push_back(gcd(pre[i - 1], post[i + 1]));
         }
+    }
+    ans = v.front();
+    for(int i{1}; i < n; ++i){
+        ans = lcm(ans, v[i]);
     }
     cout << ans;
 }
