@@ -36,6 +36,22 @@ int main(){
     }
     queue<int> Q;
     Q.push(1);
+    vi par(n + 1);
+    par[1] = -1;
+    while(!Q.empty()){
+        int x{Q.front()};
+        Q.pop();
+        for(auto& i : graph[x]){
+            if(ch[i] == 0){
+                ch[i] = 1;
+                par[i] = x;
+                Q.push(i);
+            }
+        }
+    }
+    for(int i{0}; i < n; ++i) ch[i] = 0;
+    ch[1] = 1;
+    Q.push(1);
     bool flag = true;
     int cur{0};
     while(!Q.empty()){
@@ -43,9 +59,13 @@ int main(){
         Q.pop();
         vi vec;
         sort(graph[x].begin(), graph[x].end());
-        for(int i{cur + 1}; i < cur + 1 + (int)graph[x].size(); ++i){
+        int k = (int)graph[x].size();
+        if(x != 1) k--;
+        for(int i{cur + 1}; i < cur + 1 + k; ++i){
             vec.push_back(seq[i]);
+            Q.push(seq[i]);
         }
+        if(x != 1) vec.push_back(par[x]);
         cur += (int)graph[x].size();
         sort(vec.begin(), vec.end());
         if(vec != graph[x]){
