@@ -33,16 +33,17 @@ int main(){
         for(int i{0}; i < n; ++i){
             m[A[i]].push_back(B[i]);
         }
-
+        int mx{0};
         for(auto& i : m){
             auto& v = i.second;
             sort(v.begin(), v.end());
+            mx = max(mx, (int)v.size());
             for(int j{1}; j < (int)v.size(); ++j){
                 v[j] += v[j - 1];
             }
         }
-        vl ans;
-        for(int i{1}; i <= n; ++i){
+        vl ans(n);
+        for(int i{1}; i <= mx; ++i){
             ll k = sum;
             for(auto& j : m){
                 auto& v = j.second;
@@ -54,9 +55,12 @@ int main(){
                 if(d == 0) continue;
                 k -= v[d - 1];
             }
-            ans.push_back(k);
+            ans[i - 1] = k;
         }
-        for(auto& i : ans) cout << i << " ";
+        for(int i{0}; i < n; ++i){
+            if(i >= mx) cout << 0 << " ";
+            else cout << ans[i] << " ";
+        }
         cout << "\n";
     }
 }
