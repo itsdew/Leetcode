@@ -13,39 +13,50 @@
 #define MOD 998244353LL
 using namespace std;
 
-int gcd(int a, int b){
-    if(b == 0) return a;
-    return gcd(b, a % b);
-}
 int main(){
     fastio;
-    int n;
-    cin >> n;
-    vi vec(n);
-    for(int i{0}; i < n; ++i){
-        cin >> vec[i];
-    }
-    vi post(n);
-    post[n - 1] = vec[n - 1];
-    for(int i{n - 2}; i >= 0; --i){
-        post[i] = gcd(vec[i], post[i + 1]);
-    }
-    vi pre(n);
-    post[0] = vec[0];
-    for(int i{1}; i < n; ++i){
-        pre[i] = gcd(vec[i], pre[i - 1]);
-    }
-    int ans{0};
-    for(int i{0}; i < n; ++i){
-        if(i == 0){
-            ans = max(ans, post[1]);
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        vl A(n), B(n);
+        for(int i{0}; i < n; ++i){
+            cin >> A[i];
         }
-        else if(i == n -1){
-            ans = max(ans, pre[n - 2]);
+        ll sum{0};
+        for(int i{0}; i < n; ++i){
+            cin >> B[i];
+            sum += B[i];
         }
-        else{
-            ans = max(ans, gcd(pre[i - 1], post[i + 1]));
+        map<int, vl> m;
+        for(int i{0}; i < n; ++i){
+            m[A[i]].push_back(B[i]);
         }
+
+        for(auto& i : m){
+            auto& v = i.second;
+            sort(v.begin(), v.end());
+            for(int j{1}; j < (int)v.size(); ++j){
+                v[j] += v[j - 1];
+            }
+        }
+        vl ans;
+        for(int i{1}; i <= n; ++i){
+            ll k = sum;
+            for(auto& j : m){
+                auto& v = j.second;
+                if(i > v.size()){
+                    k -= v.back();
+                    continue;
+                }
+                int d = (int)v.size() % i;
+                if(d == 0) continue;
+                k -= v[d - 1];
+            }
+            ans.push_back(k);
+        }
+        for(auto& i : ans) cout << i << " ";
+        cout << "\n";
     }
-    cout << ans;
 }
