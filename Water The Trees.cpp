@@ -61,13 +61,17 @@ int main(){
         sort(graph[x].begin(), graph[x].end());
         int k = (int)graph[x].size();
         if(x != 1) k--;
-        for(int i{cur + 1}; i < cur + 1 + k; ++i){
+        for(int i{cur + 1}; i < cur + 1 + k && i < n; ++i){
             vec.push_back(seq[i]);
             Q.push(seq[i]);
         }
         if(x != 1) vec.push_back(par[x]);
-        cur += (int)graph[x].size();
+        cur += k;
         sort(vec.begin(), vec.end());
+        for(auto& i : vec) cout << i << " ";
+        cout << "\n";
+        for(auto& i : graph[x]) cout << i << " ";
+        cout << "\n";
         if(vec != graph[x]){
             flag = false;
             break;
