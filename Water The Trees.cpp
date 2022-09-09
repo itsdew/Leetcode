@@ -46,14 +46,14 @@ int main(){
         for(int i{1}; i <= mx; ++i){
             ll k = sum;
             for(auto& j : m){
-                auto& v = j.second;
-                if(i > v.size()){
-                    k -= v.back();
+                int s = (int)j.second.size();
+                if(i > s){
+                    k -= j.second.back();
                     continue;
                 }
-                int d = (int)v.size() % i;
+                int d = s % i;
                 if(d == 0) continue;
-                k -= v[d - 1];
+                k -= j.second[d - 1];
             }
             ans[i - 1] = k;
         }
