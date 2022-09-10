@@ -17,7 +17,7 @@ int main(){
     fastio;
 	int n; ll s;
     cin >> n >> s;
-    vi vec(n);
+    vl vec(n);
     for(int i{0}; i < n; ++i){
         cin >> vec[i];
     }
@@ -26,12 +26,12 @@ int main(){
     int mxSum{0};
     while(l <= r){
         int m{(l + r) / 2};
-        vi copy = vec;
+        vl copy = vec;
         for(int i{0}; i < n; ++i){
-            copy[i] += (i + 1) * m;
+            copy[i] += 1LL * (i + 1) * m;
         }
         sort(copy.begin(), copy.end());
-        int sum{0};
+        ll sum{0};
         for(int i{0}; i < m; ++i){
             sum += copy[i];
         }
