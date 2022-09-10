@@ -17,27 +17,32 @@ int main(){
     fastio;
 	int n; ll s;
     cin >> n >> s;
-    vp vec(n);
+    vi vec(n);
     for(int i{0}; i < n; ++i){
-        cin >> vec[i].first;
-        vec[i].second = i;
+        cin >> vec[i];
     }
-    sort(vec.begin(), vec.end());
-    vl A(n + 1);
-    vl B(n + 1);
-    for(int i{1}; i <= n; ++i){
-        A[i] = vec[i - 1].first;
-        A[i] += A[i - 1];
-        B[i] = vec[i - 1].second + 1;
-        B[i] += B[i - 1];  
-    }
-    ll mx{0};
-    ll cost{0};
-    for(ll i{1}; i <= n; ++i){
-        if(A[i] + B[i] * i <= s){
-            mx = i;
-            cost = A[i] + B[i] * i;
+    int l{0}, r{n};
+    int mx{0};
+    int mxSum{0};
+    while(l <= r){
+        int m{(l + r) / 2};
+        vi copy = vec;
+        for(int i{0}; i < n; ++i){
+            copy[i] += (i + 1) * m;
         }
+        sort(copy.begin(), copy.end());
+        int sum{0};
+        for(int i{0}; i < m; ++i){
+            sum += copy[i];
+        }
+        if(sum <= s){
+            l = m + 1;
+            if(mx < m){
+                mx = m;
+                mxSum = sum;
+            }
+        }
+        else r = m - 1;
     }
-    cout << mx << " " << cost;
+    cout << mx << " " << mxSum;
 }
