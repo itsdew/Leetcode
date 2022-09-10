@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
    int fun(vector<int>& prices,bool buy, int k, int day, vector<vector<vector<int>>> &dp){
