@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     int solve(vector<int>& nums, vector<int>& multipliers,int s,int e,int i,vector<vector<int>>&dp){
