@@ -28,11 +28,11 @@ int main() {
         dp[0][0] = 0;
         for(int i{0}; i < 32; ++i){
             for(int j{0}; j < n; ++j){
-                dp[i][j + 1] = max(dp[i][j + 1], dp[i][j] + (vec[j] >> i) - k);
+                dp[i][j + 1] = dp[i][j] + (vec[j] >> i) - k;
                 if(i > 0) dp[i][j + 1] = max(dp[i - 1][j] + (vec[j] >> i), dp[i][j + 1]);
             }
         }
-        ll ans{-LLONG_MAX};
+        ll ans{0};
         for(int i{0}; i < 32; ++i){
             ans = max(ans, dp[i][n]);
         }
