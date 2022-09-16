@@ -24,7 +24,7 @@ int main() {
         for(int i{0}; i < n; ++i){
             cin >> vec[i];
         }
-        vector<vl> dp(32, vl(n + 1, -(ll)1e18));
+        vector<vl> dp(32, vl(n + 1, -LLONG_MAX / 2));
         dp[0][0] = 0;
         for(int i{0}; i < 32; ++i){
             for(int j{0}; j < n; ++j){
