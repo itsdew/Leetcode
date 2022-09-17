@@ -17,14 +17,14 @@ int main(){
     fastio;
 	int n;
     cin >> n;
-    vi A(n);
+    vl A(n);
     for(int i{0}; i < n; ++i){
         cin >> A[i];
     }
-    int ans{MAX};
+    ll ans{LONG_MAX};
     for(int i{0}; i < n; ++i){
-        int sum{0};
-        vi B(n);
+        ll sum{0};
+        vl B(n);
         for(int j{i - 1}; j >= 0; --j){
             if(j == i - 1){
                 B[j] = A[j];
