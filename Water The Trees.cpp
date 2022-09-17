@@ -26,24 +26,12 @@ int main(){
         ll sum{0};
         vl B(n);
         for(int j{i - 1}; j >= 0; --j){
-            if(j == i - 1){
-                B[j] = A[j];
-                sum++;
-            }
-            else{
-                B[j] = (B[j + 1] / A[j] + 1) * A[j]; 
-                sum += (B[j + 1] / A[j] + 1);
-            }
+            B[j] = (B[j + 1] / A[j] + 1) * A[j]; 
+            sum += (B[j + 1] / A[j] + 1);
         }
         for(int j{i + 1}; j < n; ++j){
-            if(j == i + 1){
-                B[j] = A[j];
-                sum++;
-            }
-            else{
-                B[j] = (B[j - 1] / A[j] + 1) * A[j]; 
-                sum += (B[j - 1] / A[j] + 1);
-            }
+            B[j] = (B[j - 1] / A[j] + 1) * A[j]; 
+            sum += (B[j - 1] / A[j] + 1);
         }
         ans = min(ans, sum);
     }
