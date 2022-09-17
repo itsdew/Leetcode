@@ -1,4 +1,4 @@
-// 2022-07-13
+// 2022-05-02
 #include <bits/stdc++.h>
 #define fastio                    \
 	ios_base::sync_with_stdio(0); \
@@ -13,33 +13,39 @@
 #define MOD 1000000007
 using namespace std;
 
-int main() {
-	fastio;
-	int t;
-    cin >> t;
-    while(t--){
-        int n, k;
-        cin >> n >> k;
-        vl vec(n);
-        for(int i{0}; i < n; ++i){
-            cin >> vec[i];
-        }
-        vector<vl> dp(32, vl(n + 1, -LLONG_MAX / 2));
-        dp[0][0] = 0;
-        for(int i{0}; i < 32; ++i){
-            for(int j{0}; j < n; ++j){
-                if(dp[i][j] != -LLONG_MAX / 2){
-                    dp[i][j + 1] = max(dp[i][j + 1], dp[i][j] + (vec[j] >> i) - k);
-                }
-                if(i && dp[i - 1][j] != -LLONG_MAX / 2){
-                    if(i > 0) dp[i][j + 1] = max(dp[i - 1][j] + (vec[j] >> i), dp[i][j + 1]);
-                }
+int main(){
+    fastio;
+	int n;
+    cin >> n;
+    vi A(n);
+    for(int i{0}; i < n; ++i){
+        cin >> A[i];
+    }
+    int ans{MAX};
+    for(int i{0}; i < n; ++i){
+        int sum{0};
+        vi B(n);
+        for(int j{i - 1}; j >= 0; --j){
+            if(j == i - 1){
+                B[j] = A[j];
+                sum++;
+            }
+            else{
+                B[j] = (B[j + 1] / A[j] + 1) * A[j]; 
+                sum += (B[j + 1] / A[j] + 1);
             }
         }
-        ll ans{0};
-        for(int i{0}; i < 32; ++i){
-            ans = max(ans, dp[i][n]);
+        for(int j{i + 1}; j < n; ++j){
+            if(j == i + 1){
+                B[j] = A[j];
+                sum++;
+            }
+            else{
+                B[j] = (B[j - 1] / A[j] + 1) * A[j]; 
+                sum += (B[j - 1] / A[j] + 1);
+            }
         }
-        cout << ans << "\n";
+        ans = min(ans, sum);
     }
+    cout << ans;
 }
