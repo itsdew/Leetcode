@@ -21,17 +21,17 @@ int main(){
     for(int i{0}; i < n; ++i){
         cin >> A[i];
     }
-    ll ans{LONG_MAX};
+    ll ans{LLONG_MAX};
     for(int i{0}; i < n; ++i){
         ll sum{0};
         vl B(n);
         for(int j{i - 1}; j >= 0; --j){
-            B[j] = (B[j + 1] / A[j] + 1) * A[j]; 
-            sum += (B[j + 1] / A[j] + 1);
+            B[j] = (B[j + 1] + A[j] ) / A[j] * A[j]; 
+            sum += (B[j + 1] + A[j] ) / A[j];
         }
         for(int j{i + 1}; j < n; ++j){
-            B[j] = (B[j - 1] / A[j] + 1) * A[j]; 
-            sum += (B[j - 1] / A[j] + 1);
+            B[j] = (B[j - 1] + A[j] ) / A[j] * A[j]; 
+            sum += (B[j - 1] + A[j] ) / A[j];
         }
         ans = min(ans, sum);
     }
