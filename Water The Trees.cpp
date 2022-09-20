@@ -1,6 +1,4 @@
-/*
-K.D. Vinit  /,,/
-*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -80,9 +78,16 @@ void solve()
             int j=i+l-1;
             int c1 = cost(pos[i], pos[i+1]) + dp[i+2][j];
             int c2 = cost(pos[i], pos[i+3]) + dp[i+4][j] + cost(pos[i+1], pos[i+2]);
+            
             int c3 = cost(pos[i], pos[j]) + dp[i+1][j-1];
+            
+            int c4 = c1;
+            if(j>=2) c4 = cost(pos[j-1], pos[j]) + dp[i][j-2];
+            
+            int c5 = c1;
+            if(j>=4) c5 =  dp[i][j-4] + cost(pos[j-3], pos[j]) + cost(pos[j-2], pos[j-1]);
 
-            dp[i][j]=min({c1, c2, c3});
+            dp[i][j]=min({c1, c2, c3, c4, c5});
         }
     }
 
