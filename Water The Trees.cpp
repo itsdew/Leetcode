@@ -13,8 +13,11 @@ int cost(int p1, int p2)
 {
     int ans = y;
     int l = p2-p1;
+
     int a2 = l*x;
     ans = min(ans, a2);
+
+    if(l==1) ans=x;
     return ans;
 }
 
@@ -61,7 +64,7 @@ void solve()
         return;
     }
 
-    int dp[m][m];
+    int dp[m+5][m+5];
     memset(dp, 0, sizeof(dp));
 
     for(int i=0; i+1<m; i++)
