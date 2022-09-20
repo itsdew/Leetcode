@@ -28,16 +28,16 @@ void solve()
     int a[n+1]={0};
     for(int i=1; i<=n; i++)
     {
-        char x; cin>>x;
-        a[i]=x-'0';
+        char tp; cin>>tp;
+        a[i]=tp-'0';
     }
 
     vector<int> pos;
     for(int i=1; i<=n; i++)
     {
-        char x; cin>>x;
-        int y = x-'0';
-        a[i]=(a[i]+y)%2;
+        char tp; cin>>tp;
+        int tp2 = tp-'0';
+        a[i]=(a[i]+tp2)%2;
         if(a[i]==1) pos.push_back(i);
     }
 
@@ -80,7 +80,9 @@ void solve()
             int j=i+l-1;
             int c1 = cost(pos[i], pos[i+1]) + dp[i+2][j];
             int c2 = cost(pos[i], pos[i+3]) + dp[i+4][j] + cost(pos[i+1], pos[i+2]);
-            dp[i][j]=min(c1, c2);
+            int c3 = cost(pos[i], pos[j]) + dp[i+1][j-1];
+
+            dp[i][j]=min({c1, c2, c3});
         }
     }
 
