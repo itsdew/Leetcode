@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     vector<int> sumEvenAfterQueries(vector<int>& n, vector<vector<int>>& q) {
