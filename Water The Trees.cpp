@@ -38,28 +38,35 @@ void prabhav() {
         if(start > end) return;
         ans++;
         int cstart = start, cnt = 0;
+        int openConsecutive = 0, closeConsecutive = 0;
         for(int i = start; i < end + 1; i++) {
-            if(s[i] == '(') cnt++;
-            else cnt--;
+            if(s[i] == '(') {
+                cnt++;
+                if(cnt == cstart - i + 1) openConsecutive++;
+                closeConsecutive = 0;
+            }
+            else {
+                cnt--;
+                closeConsecutive++;
+            }
+
             if(cnt == 0) {
-                self(self, cstart + 1, i - 1);
+                int consecutive = min(openConsecutive, closeConsecutive);
+                ans += consecutive - 1;
+                self(self, start + consecutive, i - consecutive);
+                openConsecutive = 0;
+                closeConsecutive = 0;
                 cstart = i + 1;
             }
         }
     };
-    int cnt = 0, start = 0, mx = 0;
-    int total = 0;
+    ans = 1;
+    int start = 0, cnt = 0;
     for(int i = 0; i < n; i++) {
-        if(s[i] == '(') cnt++, mx = max(mx, cnt);
+        if(s[i] == '(') cnt++;
         else cnt--;
-        if(cnt == 0) {
-            ans += mx;
-            mx = 0;
-            total++;
-        }
+        if(!cnt) rec(rec, start + 1, i - 1), start = i + 1;
     }
-    ans -= total;
-    ans++;
     cout << ans << '\n';
 }
 
