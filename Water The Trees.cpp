@@ -30,42 +30,12 @@ int ceil(int a, int b) { return (a + b - 1) / b; }
 
 
 void prabhav() {
-    int n, ans = 0;
+    int n, ans = 1;
     string s;
     cin >> n >> s;
-    n *= 2;
-    auto rec = [&] (const auto &self, int start, int end) -> void {
-        if(start > end) return;
-        ans++;
-        int cstart = start, cnt = 0;
-        int openConsecutive = 0, closeConsecutive = 0;
-        for(int i = start; i < end + 1; i++) {
-            if(s[i] == '(') {
-                cnt++;
-                if(cnt == cstart - i + 1) openConsecutive++;
-                closeConsecutive = 0;
-            }
-            else {
-                cnt--;
-                closeConsecutive++;
-            }
-
-            if(cnt == 0) {
-                int consecutive = min(openConsecutive, closeConsecutive);
-                ans += consecutive - 1;
-                self(self, cstart + consecutive, i - consecutive);
-                openConsecutive = 0;
-                closeConsecutive = 0;
-                cstart = i + 1;
-            }
-        }
-    };
-    ans = 1;
-    int start = 0, cnt = 0;
-    for(int i = 0; i < n; i++) {
-        if(s[i] == '(') cnt++;
-        else cnt--;
-        if(!cnt) rec(rec, start + 1, i - 1), start = i + 1;
+    for(int i = 0; i < 2 * n - 1; i++) {
+        if(s[i] == '(' && s[i + 1] == '(')
+            ans++;
     }
     cout << ans << '\n';
 }
@@ -84,5 +54,3 @@ signed main() {
     // cerr << "\nTime elapsed: " << 1000 * clock() / CLOCKS_PER_SEC << "ms\n";
     return 0;
 }
-
-// ( () (()) ) (()) ()
