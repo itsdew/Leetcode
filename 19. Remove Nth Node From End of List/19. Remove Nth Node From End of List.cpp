@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
