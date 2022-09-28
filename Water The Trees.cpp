@@ -30,7 +30,7 @@ int ceil(int a, int b) { return (a + b - 1) / b; }
 
 
 void prabhav() {
-    int n, ans = 1;
+    int n, ans = 0;
     string s;
     cin >> n >> s;
     n *= 2;
@@ -47,15 +47,19 @@ void prabhav() {
             }
         }
     };
-    int cnt = 0, start = 0;
+    int cnt = 0, start = 0, mx = 0;
+    int total = 0;
     for(int i = 0; i < n; i++) {
-        if(s[i] == '(') cnt++;
+        if(s[i] == '(') cnt++, mx = max(mx, cnt);
         else cnt--;
         if(cnt == 0) {
-            rec(rec, start + 1, i - 1);
-            start = i + 1;
+            ans += mx;
+            mx = 0;
+            total++;
         }
     }
+    ans -= total;
+    ans++;
     cout << ans << '\n';
 }
 
@@ -73,3 +77,5 @@ signed main() {
     // cerr << "\nTime elapsed: " << 1000 * clock() / CLOCKS_PER_SEC << "ms\n";
     return 0;
 }
+
+// ( () (()) ) (()) ()
