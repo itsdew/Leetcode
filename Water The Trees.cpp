@@ -34,7 +34,7 @@ void prabhav() {
     string s;
     cin >> n >> s;
     n *= 2;
-    auto rec = [&] (const auto &self, int start, int end) {
+    auto rec = [&] (const auto &self, int start, int end) -> void {
         if(start > end) return;
         ans++;
         int cstart = start, cnt = 0;
@@ -53,7 +53,7 @@ void prabhav() {
             if(cnt == 0) {
                 int consecutive = min(openConsecutive, closeConsecutive);
                 ans += consecutive - 1;
-                self(self, start + consecutive, i - consecutive);
+                self(self, cstart + consecutive, i - consecutive);
                 openConsecutive = 0;
                 closeConsecutive = 0;
                 cstart = i + 1;
