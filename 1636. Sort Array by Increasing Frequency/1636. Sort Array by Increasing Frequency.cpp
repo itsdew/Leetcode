@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     bool static comp(pair<int,int> a,pair<int,int> b)
