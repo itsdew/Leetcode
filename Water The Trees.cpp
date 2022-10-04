@@ -27,30 +27,32 @@ void solve() {
     for (int x: d1) c1[x]++;
     for (int x: d2) c2[x]++;
     auto ok = [&](int d) -> bool {
-        vector<ll> p;
-        {
-            auto b1 = c1, b2 = c2;
-            while (!b1.empty()) {
-                auto[x, cnt] = *--b1.end();
-                b1.erase(--b1.end());
-                int u = min(cnt, b2[x + d]);
-                b2[x + d] -= u;
-                for (int i = 0; i < u; ++i) p.push_back(x + d);
-                if (b2[abs(x - d)] < cnt - u) return false;
-                b2[abs(x - d)] -= cnt - u;
-                for (int i = 0; i < cnt - u; ++i) p.push_back(d - x);
-            }
-            int mn = min(0LL, *min_element(p.begin(), p.end()));
-            for (auto &x: p) x -= mn;
-            cout << "YES" << '\n';
-            for (int i = 0; i < n; ++i) cout << p[i] - mn << ' ';
-            cout << '\n';
-            cout << d - mn << ' ' << -mn << '\n';
-            return true;
+        vector<int> p;
+        auto b1 = c1, b2 = c2;
+        while (!b1.empty()) {
+            auto[x, cnt] = *--b1.end();
+            b1.erase(--b1.end());
+            int u = min(cnt, b2[x + d]);
+            b2[x + d] -= u;
+            if (b2[abs(x - d)] < cnt - u) return false;
+            for (int i = 0; i < u; ++i) p.push_back(x + d);
+            b2[abs(x - d)] -= cnt - u;
+            for (int i = 0; i < cnt - u; ++i) p.push_back(d - x);
         }
+        int mn = min(0, *min_element(p.begin(), p.end()));
+        for (auto &x: p) x -= mn;
+        cout << "YES" << '\n';
+        for (int i = 0; i < n; ++i) cout << p[i] - mn << ' ';
+        cout << '\n';
+        cout << d - mn << ' ' << -mn << '\n';
+        return true;
+
     };
     for (int x: d1) {
-        if (ok(x + d2[0]) || ok(abs(x - d2[0]))) return;
+        if (ok(abs(x - d2[0]))) return;
+    }
+    for (int x: d1) {
+        if (ok(x + d2[0])) return;
     }
     cout << "NO\n";
 }
