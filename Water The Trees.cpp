@@ -56,3 +56,4 @@ void solve() {
     }
     cout << "NO\n";
 }
+ 
