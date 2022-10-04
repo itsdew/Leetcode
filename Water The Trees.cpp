@@ -1,56 +1,56 @@
-// Snippets: https://github.com/prabhavdogra/CPSnippets
 #include <bits/stdc++.h>
-using namespace std; 
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
-#ifdef prabhav_
-    // #define TERMINAL
-    #include "Headers/debug.cpp"
-#else
-    #define d(...) 0
-    #pragma GCC optimize("O3")
-    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,fma")
-#endif
 
-#define int long long int
-#define ld long double
-#define forp(i, a, b) for (int i = (int)a; i < (int)b; i++)
-#define sz(a) (int)a.size()
-#define endl '\n'
-#define all(a) (a).begin(), (a).end()
-#define rall(a) (a).rbegin(), (a).rend()
-#define uniq(a) (a).erase(unique(all(a)), (a).end())
-#define fix(f, n) fixed << setprecision(n) << f
-#define setbits(x) __builtin_popcount(x)
-#define setbitsll(x) __builtin_popcountll(x)
-#define MSB(n) (31 - __builtin_clz(n))
-constexpr int64_t INF = 2e18;
-constexpr int64_t M = 1 ? 1e9 + 7 : 998'244'353;
-int ceil(int a, int b) { return (a + b - 1) / b; }
+using namespace std;
+using ll = long long;
 
+void solve();
 
-void prabhav() {
-    int n, ans = 1;
-    string s;
-    cin >> n >> s;
-    for(int i = 0; i < 2 * n - 1; i++) {
-        if(s[i] == '(' && s[i + 1] == '(')
-            ans++;
-    }
-    cout << ans << '\n';
+#define answer(out) { cout << (out) << '\n'; return; }
+#define answerExit(out) { cout << (out) << '\n'; exit(0); }
+
+int main() {
+    cin.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+    int t = 1;
+    cin >> t;
+    do { solve(); } while (--t);
+    return 0;
 }
 
-signed main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-    int T = 1;
-    cin >> T;
-    while (T--) {
-        prabhav();
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> d1(n), d2(n);
+    for (int &x: d1) cin >> x;
+    for (int &x: d2) cin >> x;
+    map<int, int> c1, c2;
+    for (int x: d1) c1[x]++;
+    for (int x: d2) c2[x]++;
+    auto ok = [&](int d) -> bool {
+        vector<ll> p;
+        {
+            auto b1 = c1, b2 = c2;
+            while (!b1.empty()) {
+                auto[x, cnt] = *--b1.end();
+                b1.erase(--b1.end());
+                int u = min(cnt, b2[x + d]);
+                b2[x + d] -= u;
+                for (int i = 0; i < u; ++i) p.push_back(x + d);
+                if (b2[abs(x - d)] < cnt - u) return false;
+                b2[abs(x - d)] -= cnt - u;
+                for (int i = 0; i < cnt - u; ++i) p.push_back(d - x);
+            }
+            int mn = min(0LL, *min_element(p.begin(), p.end()));
+            for (auto &x: p) x -= mn;
+            cout << "YES" << '\n';
+            for (int i = 0; i < n; ++i) cout << p[i] - mn << ' ';
+            cout << '\n';
+            cout << -mn << ' ' << d - mn << '\n';
+            return true;
+        }
+    };
+    for (int x: d1) {
+        if (ok(x + d2[0]) || ok(abs(x - d2[0]))) return;
     }
-    // cerr << "\nTime elapsed: " << 1000 * clock() / CLOCKS_PER_SEC << "ms\n";
-    return 0;
+    cout << "NO\n";
 }
