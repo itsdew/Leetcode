@@ -32,7 +32,8 @@ void solve() {
         while (!b1.empty()) {
             auto[x, cnt] = *--b1.end();
             b1.erase(--b1.end());
-            int u = min(cnt, b2[x + d]);
+            int u = b2[x + d];
+            if (u > cnt) return false;
             b2[x + d] -= u;
             if (b2[abs(x - d)] < cnt - u) return false;
             for (int i = 0; i < u; ++i) p.push_back(x + d);
@@ -40,13 +41,11 @@ void solve() {
             for (int i = 0; i < cnt - u; ++i) p.push_back(d - x);
         }
         int mn = min(0, *min_element(p.begin(), p.end()));
-        for (auto &x: p) x -= mn;
         cout << "YES" << '\n';
         for (int i = 0; i < n; ++i) cout << p[i] - mn << ' ';
         cout << '\n';
         cout << d - mn << ' ' << -mn << '\n';
         return true;
-
     };
     for (int x: d1) {
         if (ok(abs(x - d2[0]))) return;
@@ -56,4 +55,3 @@ void solve() {
     }
     cout << "NO\n";
 }
- 
