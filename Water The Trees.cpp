@@ -45,7 +45,7 @@ void solve() {
             cout << "YES" << '\n';
             for (int i = 0; i < n; ++i) cout << p[i] - mn << ' ';
             cout << '\n';
-            cout << -mn << ' ' << d - mn << '\n';
+            cout << d - mn << ' ' << -mn << '\n';
             return true;
         }
     };
