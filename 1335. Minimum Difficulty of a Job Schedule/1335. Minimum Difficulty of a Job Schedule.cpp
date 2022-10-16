@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
     int dp[300][11];
 public:
@@ -27,7 +27,6 @@ public:
             return val;
         }
         
-        // Otherwise
         val = INT_MAX;
         int maxVal = jobDifficulty[s];
         for (int i = s; e-i+1 >= d; i++)
