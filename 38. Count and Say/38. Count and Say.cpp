@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     string countAndSay(int n) {
