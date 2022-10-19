@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
     struct myComp {
         bool operator () (const pair<string, int>& p1, const pair<string, int>& p2) {
