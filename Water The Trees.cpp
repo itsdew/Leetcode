@@ -1,4 +1,7 @@
+Practical : https://drive.google.com/drive/folders/129jl153chFlt7oeZfKb513P7_i5EjYsM?usp=share_link
+
 //Question: https://codeforces.com/contest/1661/problem/C
+
 //Author: Devendra Uraon
 #include <bits/stdc++.h>
 #define vi vector<int>
