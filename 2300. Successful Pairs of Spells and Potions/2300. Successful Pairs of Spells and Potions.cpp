@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     vector<int> successfulPairs(vector<int>& v1, vector<int>& v2, long long success) {
