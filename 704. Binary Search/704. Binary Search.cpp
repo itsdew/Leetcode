@@ -1,4 +1,4 @@
-//Author: Devendra Uraon
+//Author: Devendra Uraon 
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
